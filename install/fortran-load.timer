@@ -1,0 +1,9 @@
+[Unit]
+Description=fortran-load
+
+[Timer]
+OnBootSec=0s
+OnCalendar=hourly
+
+[Install]
+WantedBy=multi-user.target
