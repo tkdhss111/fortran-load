@@ -2,7 +2,7 @@
 
 Server Program for Making Electricity Load Database
 
-- Collects electricy load data hourly from TEPCO "Denki Yoho".
+- Collects electricy load data hourly from TEPCO PG [でんき予報](https://www.tepco.co.jp/forecast)
 
 # Dependencies
 
@@ -12,11 +12,15 @@ Server Program for Making Electricity Load Database
 
 # Install
 
-> cd install\
-> sudo make service
+```
+cd install
+sudo make service
+```
 
 # Uninstall
 
-> cd install\
-> sudo make stop\
-> sudo make uninstall
+```
+cd install
+sudo make stop
+sudo make uninstall
+```
