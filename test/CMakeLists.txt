@@ -7,7 +7,6 @@ set ( ARGS
 set ( LIBS sqlite3 )
 
 set ( SRCS 
-  ~/1_projects/utils/file/src/file_mo.f90
   ~/1_projects/utils/fortran-sqlite3/src/sqlite.f90
   ~/2_tools/fortran-logger/src/logger_mo.f90
   ~/2_tools/fortran-datetime/src/dt_mo.f90

@@ -3,10 +3,8 @@
 module load_mo
 
   use logger_mo
-  use sqlite
   use dt_mo
-  use file_mo
-  !use ifport  !intel 
+  use sqlite
 
   implicit none
 
@@ -219,7 +217,7 @@ contains
     integer                    :: man_kw, man_kw_pv
     integer, parameter         :: LINE_FR = 56
     integer, parameter         :: NLOADS = 60 / 5 * 24
-    integer u, i
+    integer u, i, iostat
 
     call logger%open ( __FILE__, __LINE__, newunit = u, file = file, status = 'old' )
 
@@ -360,7 +358,7 @@ contains
     write( utf8%file, '(a, i4, a)' ) trim(wd)//'/'//trim(sql%table)//'/utf8/year=', yr, '.csv'
 
     outfile = utf8%file
-    sjis%dir = dirname(sjis%file)
+    sjis%dir = dirname( sjis%file )
 
     !inquire( directory = sjis%dir, exist = sjis%exist ) ! Intel
     inquire( file = trim(sjis%dir)//'/.', exist = sjis%exist )
@@ -434,5 +432,45 @@ contains
     __LOG__( 'E: print_loads' )
 
   end subroutine
+
+  pure elemental character(255) function dirname ( path )
+    character(*), intent(in) :: path
+    integer                  :: p_sep
+    p_sep = index(path, '/', back = .true.)
+    if (p_sep > 1) then
+      dirname = path(1:p_sep)
+    else
+      dirname = './'
+    end if
+  end function
+
+  function count_rows ( u ) result ( nr )
+    integer, intent(in) :: u
+    integer             :: nr
+    character(255)      :: iomsg
+    integer             :: iostat
+    nr = 0
+    rewind(u)
+    do
+      read ( u, '()', end = 10, iostat = iostat, iomsg = iomsg )
+      if ( iostat /= 0 ) then
+        nr = 0
+        return
+      end if
+      nr = nr + 1
+    end do
+    10 rewind (u)
+  end function
+
+  pure function make_csv ( vals ) result ( csv )
+    character(*), intent(in) :: vals(:) 
+    character(80*size(vals)) :: csv
+    integer i, n
+    n = size(vals)
+    csv = trim(vals(1))
+    do i = 2, n
+      csv = trim(csv)//','//trim(vals(i))
+    end do
+  end function
 
 end module
