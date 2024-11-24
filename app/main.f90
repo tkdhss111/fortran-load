@@ -48,7 +48,7 @@ program main
   print *, '   wd: ', trim(wd)
   print *, 'table: ', trim(table)
 
-  __EXEC__( 'mkdir -p '//trim(wd)//'/'//trim(table) )
+  call execute_command_line ( 'mkdir -p '//trim(wd)//'/'//trim(table) )
 
   call logger%init( app = 'fortran-load', file = trim(wd)//'/'//trim(table)//'/fortran-load.log' )
 
