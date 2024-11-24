@@ -4,8 +4,10 @@ MKFILE:=-C .. -f makefile
 run: clean release
 	../build/app/$(BIN) \
   --wd "/mnt/DATA/load" \
-  --database "load.db" \
   --table "TEPCO"
+
+debug:
+	make debug $(MKFILE)
 
 release:
 	make release $(MKFILE)

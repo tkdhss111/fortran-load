@@ -1,6 +1,6 @@
 # fortran-load 
 
-Server Program for Making Electricity Load Database
+Server Program for Making Electricity Load CSV File
 
 - Collects electricy load data hourly from TEPCO PG [でんき予報](https://www.tepco.co.jp/forecast)
 
@@ -8,7 +8,6 @@ Server Program for Making Electricity Load Database
 
 - fortran-logger
 - fortran-datetime
-- fortran-sqlite3
 
 # Install
 

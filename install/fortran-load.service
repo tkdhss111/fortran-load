@@ -5,11 +5,11 @@ Description=fortran-load
 User=hss
 WorkingDirectory=/mnt/DATA/load
 
-ExecStart=/usr/local/bin/fortran-load --wd '/mnt/DATA/load' --database '/mnt/DATA/load/load.db' --table 'TEPCO'
+ExecStart=/usr/local/bin/fortran-load --wd '/mnt/DATA/load' --table 'TEPCO'
 
 # Intel
 #Environment = "MKL_ENABLE_INSTRUCTIONS=SSE4_2"
-#ExecStart=/bin/bash -c "source /opt/intel/oneapi/setvars.sh && /usr/local/bin/fortran-load --wd '/mnt/DATA/load' --database '/mnt/DATA/load/load.db' --table 'TEPCO'"
+#ExecStart=/bin/bash -c "source /opt/intel/oneapi/setvars.sh && /usr/local/bin/fortran-load --wd '/mnt/DATA/load' --table 'TEPCO'"
 
 [Install]
 WantedBy=multi-user.target

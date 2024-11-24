@@ -48,8 +48,8 @@ module cli_mo
       integer, intent(inout) :: i_arg
     end subroutine
 
-    module subroutine get_logical ( ox, i_arg )
-      logical, intent(inout) :: ox
+    module subroutine get_logical ( ok, i_arg )
+      logical, intent(inout) :: ok
       integer, intent(inout) :: i_arg
     end subroutine
 
@@ -57,11 +57,10 @@ module cli_mo
 
 contains
 
-  subroutine get_args ( this, wd, database, table ) 
+  subroutine get_args ( this, wd, table ) 
 
     class(cli_ty), intent(inout)           :: this
     character(*),  intent(inout), optional :: wd
-    character(*),  intent(inout), optional :: database
     character(*),  intent(inout), optional :: table
     integer nargs
 
@@ -88,9 +87,6 @@ contains
 
         case ( '--wd' )
           call get_value ( wd, i_arg )
-
-        case ( '--database' )
-          call get_value ( database, i_arg )
 
         case ( '--table' )
           call get_value ( table, i_arg )

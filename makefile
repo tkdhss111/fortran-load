@@ -5,6 +5,9 @@ MKDIR_BUILD := mkdir -p build && cd build
 
 .PHONY: test install
 
+debug:
+	$(MKDIR_BUILD) && $(CMAKE_DBG) && ninja
+
 release:
 	$(MKDIR_BUILD) && $(CMAKE_RLS) && ninja
 
