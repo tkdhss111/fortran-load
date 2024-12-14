@@ -16,13 +16,15 @@ program main
   character(255)             :: wd
   type(load_ty), allocatable :: loads(:), loads_5mins(:)
   character(255)             :: table
+  character(255)             :: csvfile_load
+  character(255)             :: parquet_load
   integer yr
 
   cli%title     = 'Server Program for Makeing Electricity Load CSV File'
   cli%exe       = 'fortran-load'
   cli%author    = 'Hisashi Takeda, Ph.D.'
   cli%copyright = '2024 Copyright(C) All Rights Reserved.'
-  cli%version   = '1.1.0 (@date 2024-11-24.)'
+  cli%version   = '1.1.0 (@date 2024-12-09.)'
   cli%usage(i)  = 'Usage: '//trim(cli%exe)//' [OPTIONS]'                    ;i=i+1
   cli%usage(i)  = ''                                                        ;i=i+1
   cli%usage(i)  = 'Note. TEPCO load has hour-start timestamp'               ;i=i+1
@@ -59,16 +61,23 @@ program main
     ! For the present year, load data have been stored until yesterday
     loads = download_load ( table, wd, yr )
 
-    call write_csv ( loads = loads, file = trim(wd)//'/'//trim(table)//'/load.csv', append = (yr /= EPOCH_YR) )
+    call write_csv ( loads = loads, &
+                     file = trim(wd)//'/'//trim(table)//'/load.csv', append = (yr /= EPOCH_YR) )
 
   end do
 
   loads = download_load_today ( table, wd, t0 )
 
-  call write_csv ( loads = loads, file = trim(wd)//'/'//trim(table)//'/load.csv', append = .true. )
+  csvfile_load = trim(wd)//'/'//trim(table)//'/load.csv'
+  parquet_load = trim(wd)//'/'//trim(table)//'/load.parquet'
+  call write_csv ( loads = loads, file = csvfile_load, append = .true. )
+  call csv2parquet ( csvfile_load, parquet_load )
 
   loads_5mins = extract_5mindata_today ( table, wd, t0 )
 
-  call write_csv ( loads_5mins, trim(wd)//'/'//trim(table)//'/load_5mins_today.csv' )
+  csvfile_load = trim(wd)//'/'//trim(table)//'/load_5mins_today.csv'
+  parquet_load = trim(wd)//'/'//trim(table)//'/load_5mins_today.parquet'
+  call write_csv ( loads = loads_5mins, file = csvfile_load )
+  call csv2parquet ( csvfile_load, parquet_load )
 
 end program

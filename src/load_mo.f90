@@ -14,6 +14,7 @@ module load_mo
   public :: download_load_today 
   public :: extract_5mindata_today
   public :: write_csv
+  public :: csv2parquet
 
   type load_ty
     type(dt_ty) :: t
@@ -305,6 +306,25 @@ contains
     __LOG__( 'E: write_csv' )
 
   end subroutine
+
+  subroutine csv2parquet ( csv, parquet )
+
+    character(*), intent(in)    :: csv, parquet
+    character(255)              :: query
+
+    __LOG__( 'S: csv2parquet' )
+
+    ! Do not include TIMESTAMP-related column types,
+    ! or duckdb automatically converts datetime to UTC datatime.
+    query = 'COPY (SELECT * FROM read_csv("'//trim(csv)//&
+      '", auto_type_candidates = ["BOOLEAN", "INTEGER", "FLOAT", "VARCHAR"])) TO "'//&
+      trim(parquet)//'" WITH(FORMAT PARQUET)'
+
+    __EXEC__( "duckdb :memory: '"//trim(query)//"'" )
+
+    __LOG__( 'E: csv2parquet' )
+
+  end subroutine csv2parquet
 
   pure elemental character(255) function dirname ( path )
     character(*), intent(in) :: path
