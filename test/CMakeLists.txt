@@ -5,17 +5,17 @@ set ( ARGS
   )
 
 set ( SRCS 
-  ~/2_tools/fortran-logger/src/logger_mo.f90
-  ~/2_tools/fortran-datetime/src/dt_mo.f90
+  ${MYHOME}/2_tools/fortran-logger/src/logger_mo.f90
+  ${MYHOME}2_tools/fortran-datetime/src/dt_mo.f90
   ../app/cli_mo.f90
   ../app/main.f90
   ../src/load_mo.f90
   )
 
 set ( CMAKE_Fortran_FLAGS
-  "-ffree-line-length-none -fcoarray=single -fdefault-real-8")
+  "-ffree-line-length-none -fcoarray=single")
 set ( CMAKE_Fortran_FLAGS_DEBUG
-  "-Ddebug -O0 -fbounds-check -fbacktrace -Wall -Wno-uninitialized -Wno-maybe-uninitialized" )
+  "-Ddebug -O0 -fbounds-check -fbacktrace -Wall -Wno-uninitialized -Wno-maybe-uninitialized ${CMAKE_Fortran_FLAGS}" )
 
 add_executable ( ${EXE} ${SRCS} )
 target_include_directories ( ${EXE} PUBLIC "../include" )

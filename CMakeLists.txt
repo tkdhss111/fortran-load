@@ -4,5 +4,12 @@ project ( fortran-load LANGUAGES Fortran VERSION 1.0.0 )
 enable_language ( Fortran )
 enable_testing ()
 
+if (UNIX)
+  set ( MYHOME /home/hss )
+endif (UNIX)
+if (WIN32)
+  set ( MYHOME C:/Users/hss/0_tkd/1_hss )
+endif (WIN32)
+
 add_subdirectory ( app )
 add_subdirectory ( test )
