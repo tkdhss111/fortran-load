@@ -75,7 +75,7 @@ contains
 
     t0 = t0%now()
 
-    if ( (.not. sjis%exist .or. t0%yr == yr) .and. yr > 2015 ) then
+    if ( (.not. sjis%exist .or. t0%yr - 1 == yr .or. t0%yr == yr) .and. yr > 2015 ) then
 
       __LOG__( 'curl -S "'//trim(url)//'" -o "'//trim(sjis%file)//'"' )
       __EXEC__( 'curl -S "'//trim(url)//'" -o "'//trim(sjis%file)//'"' )
@@ -296,7 +296,8 @@ contains
     end if
 
     do i = 1, size(loads%mw)
-      write ( csv, '(a)' ) '"'//loads(i)%t%datetime//'",'//loads(i)%t%date//','//loads(i)%t%time
+      !write ( csv, '(a)' ) '"'//loads(i)%t%datetime//'",'//loads(i)%t%date//','//loads(i)%t%time
+      write ( csv, '(a)' ) loads(i)%t%datetime//','//loads(i)%t%date//','//loads(i)%t%time
       write ( csv, '( a, 3(i0, :, ",") )' ) trim(csv)//',', loads(i)%t%hr, loads(i)%t%mi, loads(i)%mw
       write( u, '(a)' ) csv
     end do

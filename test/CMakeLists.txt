@@ -6,7 +6,7 @@ set ( ARGS
 
 set ( SRCS 
   ${MYHOME}/2_tools/fortran-logger/src/logger_mo.f90
-  ${MYHOME}2_tools/fortran-datetime/src/dt_mo.f90
+  ${MYHOME}/2_tools/fortran-datetime/src/dt_mo.f90
   ../app/cli_mo.f90
   ../app/main.f90
   ../src/load_mo.f90
